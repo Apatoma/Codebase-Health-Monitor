@@ -1,18 +1,12 @@
 from app import db
+from datetime import datetime
 
-class CodebaseMetric(db.Model):
+class Ticket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    timestamp = db.Column(db.DateTime, nullable=False)
-    complexity = db.Column(db.Float, nullable=False)
-    code_smells = db.Column(db.Integer, nullable=False)
-    duplication = db.Column(db.Float, nullable=False)
-    debt_ratio = db.Column(db.Float, nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    status = db.Column(db.String(50), nullable=False, default='To Do')
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def to_dict(self):
-        return {
-            'timestamp': self.timestamp.isoformat(),
-            'complexity': self.complexity,
-            'code_smells': self.code_smells,
-            'duplication': self.duplication,
-            'debt_ratio': self.debt_ratio,
-        }
+    def __repr__(self):
+        return f'<Ticket {self.id} - {self.title}>'
